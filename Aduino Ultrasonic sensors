@@ -1,0 +1,24 @@
+int trig = 4; // Ultrasonic sensors
+int echo = 6; // Ultrasonic sensors
+
+void setup() 
+{
+  pinMode(trig,OUTPUT); // Ultrasonic sensors
+  pinMode(echo,INPUT); // Ultrasonic sensors
+}
+
+void loop() 
+{
+  digitalWrite(trig,HIGH); 
+  delayMicroseconds(10); //10cm
+  digitalWrite(trig,LOW);
+  long duration = pulseIn(echo,HIGH);
+  long distance = (duration*340)/2/10000; //Calculate distance
+  
+  if(distance<10) 
+   {
+      ble.write('1'); //Send data '1'
+      MsTimer2::stop(); //Timer2 interrupt 
+      
+      delay(5);
+   }
