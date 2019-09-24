@@ -1,0 +1,30 @@
+#include <SPI.h>
+#include <MFRC522.h> 
+#define RST_PIN 9
+#define SS_PIN 10
+
+MFRC522 mfrc(SS_PIN,RST_PIN); //RFID
+
+void setup() 
+{  
+  SPI.begin();
+  mfrc.PCD_Init(); 
+}
+
+void loop() 
+{
+  if ( !mfrc.PICC_IsNewCardPresent() || !mfrc.PICC_ReadCardSerial() )
+    {
+        delay(5); 
+    }
+  else if(mfrc.uid.uidByte[0] == 23 &&
+          mfrc.uid.uidByte[1] == 114&&
+          mfrc.uid.uidByte[2] == 40 &&
+          mfrc.uid.uidByte[3] == 59 ) 
+          {
+            ble.write('2');
+            MsTimer2::start(); 
+            delay(5);
+          } 
+ 
+}
