@@ -1,0 +1,16 @@
+#include <Servo.h> //서보모터 헤더파일
+
+Servo sv;
+void setup() 
+{  
+  sv.attach(5); 
+}
+
+void loop()
+{
+ for(int i = 10; i <170; i++)  //10~170도까지 반복 설정
+   {
+     sv.write(i); 
+     delay(5);
+   }
+}
