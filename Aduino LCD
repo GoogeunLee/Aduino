@@ -1,0 +1,19 @@
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C led(0x27, 16, 2); //lcd 가로 16,세로 2
+
+void setup() {
+  led.init();
+  led.backlight();
+  led.print("      MODE"); //기본적으로     MODE 출력
+}
+void loop() {
+if(ble.available()) {
+      char data = ble.read();
+      if(data == '1'){  //1값을 수신하면 아랫줄에 WRANNING출력
+       led.setCursor(0, 1);
+       led.print("!!!!!WARNNIG!!!!!"); }
+else {
+        led.setCursor(0, 1);
+        led.print("  Safety Zone^^"); } //1값이 아닐땐 항상 Safety zone출력
+}
