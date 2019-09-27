@@ -1,0 +1,18 @@
+void setup()
+{
+  ble.begin(9600) ;
+  pinMode(13, OUTPUT); //LED
+  pinMode(12,OUTPUT); //PIEZO
+}
+void loop() {
+if(ble.available()){
+   char data = ble.read();
+if(data == '1'){              // '1' =  PIEZO LED ON
+   digitalWrite(13, HIGH);
+   digitalWrite(12,HIGH);
+}
+else{
+   digitalWrite(13, LOW);
+   digitalWrite(12,LOW);
+ }
+}
