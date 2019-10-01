@@ -1,0 +1,46 @@
+#include <SoftwareSerial.h>
+#include <LiquidCrystal_I2C.h>
+SoftwareSerial ble(2,3);
+
+LiquidCrystal_I2C led(0x27, 16, 2);
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  ble.begin(9600);
+  pinMode(13, OUTPUT);
+  pinMode(12,OUTPUT);
+
+  led.init();
+  led.backlight();
+  led.print("      MODE");
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  if(ble.available())
+  {
+      char data = ble.read();
+      if(data == '1')
+       {
+        digitalWrite(13, HIGH);
+        digitalWrite(12,HIGH);
+         led.setCursor(0, 1);
+         led.print("!!!!!WARNNIG!!!!!");
+        
+       }
+      else
+      {
+        digitalWrite(13, LOW);
+        digitalWrite(12,LOW);
+        led.setCursor(0, 1);
+        led.print("  Safety Zone^^");
+      }
+      Serial.println(data);
+  }
+  
+  if(Serial.available())
+    {
+    ble.write(Serial.read());
+    }
+}
